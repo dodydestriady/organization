@@ -7,12 +7,24 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @can('create', App\Models\Organization::class)
-            <x-jet-button wire:click="addRecord" wire:loading.attr="disabled">
-                {{ __('Add Organization') }}
-            </x-jet-button>
-            @endcan
-            <div class="flex flex-col py-4">
+            <div class="flex justify-between mb-4">
+                <div class="flex-1">
+                    <div class="flex justify-between">
+                        <div class="flex-1">
+                            <input type="text" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block w-full" wire:model.defer="keyword" placeholder="{{ __('Search by organization or pic name') }}">
+                        </div>
+                        <x-jet-button wire:click="search" wire:loading.attr="disabled">
+                            {{ __('Search') }}
+                        </x-jet-button>
+                    </div>
+                </div>
+                @can('create', App\Models\Organization::class)
+                <x-jet-button wire:click="addRecord" wire:loading.attr="disabled" class="ml-4">
+                    {{ __('Add Organization') }}
+                </x-jet-button>
+                @endcan
+            </div>
+            <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

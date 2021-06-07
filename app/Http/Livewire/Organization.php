@@ -13,6 +13,7 @@ class Organization extends Component
     public $isEdit;
     public $organization;
     public $organizations;
+    public $keyword;
 
     public function mount()
     {
@@ -37,6 +38,7 @@ class Organization extends Component
     {
         $this->organizations = ModelsOrganization::all();
         $this->fill([
+            'keyword' => null,
             'isEdit' => false,
             'openForm' => false,
             'organization' => [
@@ -53,6 +55,13 @@ class Organization extends Component
     public function submit()
     {
         $this->isEdit ? $this->update() : $this->create();
+    }
+
+    public function search()
+    {
+        $this->organizations = ModelsOrganization::where('name', 'like', "%$this->keyword%")->orWhereHas('persons', function($person) {
+            $person->where('name', 'like', "%pic%");
+        })->get();
     }
 
     private function create()
