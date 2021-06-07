@@ -27,6 +27,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'organization_id',
+        'phone',
+        'role'
     ];
 
     /**
@@ -58,4 +61,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public const ADMIN = '1';
+    public const ACCOUNT_MANAGER = '2';
+    public const PIC = '3';
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
 }

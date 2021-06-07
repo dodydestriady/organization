@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::group([
+    'middleware' => 'auth'
+], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/organization', Livewire\Organization::class)->name('organization');
+    Route::get('/organization/{organization}', Livewire\OrganizationDetail::class)->name('organization.detail');
+    Route::get('/person', Livewire\Person::class)->name('person');
+});
